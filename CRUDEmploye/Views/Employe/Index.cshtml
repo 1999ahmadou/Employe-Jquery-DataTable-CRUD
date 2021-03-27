@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<CRUDEmploye.Models.Entities.Employe>
 
 @{ 
     ViewBag.Title = "Liste des employes";
@@ -7,7 +7,7 @@
 <h2>Employe CRUD Operations</h2>
 
 @*<a class="btn btn-info" style="margin-bottom:10px" onclick="PopupForm('@Url.Action("AddEdit","Employe")')" ><i class="fa fa-plus"></i> Add New</a>*@
-<p><button type="button" class="btn btn-sm btn-success pull-right" onclick="getEmploye()">Add New</button> </p>
+<p><button type="button" class="btn btn-sm btn-success" onclick="getEmploye()">Add New</button> </p>
 <table id="employeeTable" class="table table-striped">
     <thead>
         <tr>
@@ -19,6 +19,19 @@
             <th>Age</th>
         </tr>
     </thead>
+    <tbody>
+        @foreach(var item in Model)
+            {
+                <tr>
+                    <td>@item.EmployeID</td>
+                    <td>@item.Name</td>
+                    <td>@item.Position</td>
+                    <td>@item.Office</td>
+                    <td>@item.Salary</td>
+                    <td>@item.Age</td>
+                </tr>
+            }
+    </tbody>
 </table>
 
 <div class="modal fade" role="dialog" id="employeModal" aria-label="employeModalLabel" aria-hidden="true">
@@ -35,26 +48,29 @@
      <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
      @*<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>*@
      <script>
-          $("#employeeTable").DataTable({
-                 "ajax": {
-                 "url": "/Employe/GetData",
-                     "type": "GET",
-                     "datatype": "json",
-                     "dataSrc": "",
-                     "mDataProp": ""
-             },
-              "aoColumns": [
-                     { "mdata": "EmployeID", "autowidth": true },
-                     { "mdata": "Name", "autowidth": true },
-                     { "mdata": "Position", "autowidth": true},
-                     { "mdata": "Office", "autowidth": true},
-                     { "mdata": "Salary", "autowidth": true},
-                     { "mdata": "Age", "autowidth": true}
-              ],
-              "language": {
-                     "emptyTable":"No data found, please click on <b>Add New</b> button"
-              }
-             });
+         $(document).ready(function () {
+             $('#employeeTable').DataTable();
+         });
+          //$("#employeeTable").DataTable({
+          //       "ajax": {
+          //       "url": "/Employe/GetData",
+          //           "type": "GET",
+          //           "datatype": "json",
+          //           "dataSrc": "",
+          //           "mDataProp": ""
+          //   },
+          //    "aoColumns": [
+          //           { "mdata": "EmployeID", "autowidth": true },
+          //           { "mdata": "Name", "autowidth": true },
+          //           { "mdata": "Position", "autowidth": true},
+          //           { "mdata": "Office", "autowidth": true},
+          //           { "mdata": "Salary", "autowidth": true},
+          //           { "mdata": "Age", "autowidth": true}
+          //    ],
+          //    "language": {
+          //           "emptyTable":"No data found, please click on <b>Add New</b> button"
+          //    }
+          //   });
 
          function getEmploye(id) {
              $.get("/Employe/GetEmployePartial", { id: id }, function (res) {
