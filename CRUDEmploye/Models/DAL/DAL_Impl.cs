@@ -43,6 +43,7 @@ namespace CRUDEmploye.Models.DAL
 
             employe.EmployeID = (int)dataRow["EmployeID"];
             employe.Name = (string)dataRow["Name"];
+            employe.Position = (string)dataRow["Position"];
             employe.Office = (string)dataRow["Office"];
             employe.Salary = (int)dataRow["Salary"];
             employe.Age = (int)dataRow["Age"];

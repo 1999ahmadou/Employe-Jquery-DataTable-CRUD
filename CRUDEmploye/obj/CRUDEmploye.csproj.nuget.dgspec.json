@@ -40,9 +40,21 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "dependencies": {
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            },
             "MySql.Data": {
               "target": "Package",
               "version": "[8.0.23, )"
+            },
+            "bootstrap": {
+              "target": "Package",
+              "version": "[4.6.0, )"
+            },
+            "jQuery.UI.Combined": {
+              "target": "Package",
+              "version": "[1.12.1, )"
             }
           },
           "imports": [

@@ -1,3 +1,4 @@
+using CRUDEmploye.Models.DAL;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,7 @@ namespace CRUDEmploye
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<IDAL, DAL_Impl>();
             services.AddControllersWithViews();
         }
 
@@ -46,7 +48,7 @@ namespace CRUDEmploye
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Employe}/{action=Index}/{id?}");
             });
         }
     }

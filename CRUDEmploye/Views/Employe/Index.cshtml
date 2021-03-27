@@ -1,0 +1,84 @@
+﻿
+
+@{ 
+    ViewBag.Title = "Liste des employes";
+}
+
+<h2>Employe CRUD Operations</h2>
+
+@*<a class="btn btn-info" style="margin-bottom:10px" onclick="PopupForm('@Url.Action("AddEdit","Employe")')" ><i class="fa fa-plus"></i> Add New</a>*@
+<p><button type="button" class="btn btn-sm btn-success pull-right" onclick="getEmploye()">Add New</button> </p>
+<table id="employeeTable" class="table table-striped">
+    <thead>
+        <tr>
+            <th>EmployeID</th>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Salary</th>
+            <th>Age</th>
+        </tr>
+    </thead>
+</table>
+
+<div class="modal fade" role="dialog" id="employeModal" aria-label="employeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" id="employeModalBody">
+
+        </div>
+    </div>
+</div>
+
+@*<link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap5.min.css"/>*@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+@section Scripts{ 
+     <script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+     @*<script src="https://cdn.datatables.net/1.10.24/js/dataTables.bootstrap5.min.js"></script>*@
+     <script>
+          $("#employeeTable").DataTable({
+                 "ajax": {
+                 "url": "/Employe/GetData",
+                     "type": "GET",
+                     "datatype": "json",
+                     "dataSrc": "",
+                     "mDataProp": ""
+             },
+              "aoColumns": [
+                     { "mdata": "EmployeID", "autowidth": true },
+                     { "mdata": "Name", "autowidth": true },
+                     { "mdata": "Position", "autowidth": true},
+                     { "mdata": "Office", "autowidth": true},
+                     { "mdata": "Salary", "autowidth": true},
+                     { "mdata": "Age", "autowidth": true}
+              ],
+              "language": {
+                     "emptyTable":"No data found, please click on <b>Add New</b> button"
+              }
+             });
+
+         function getEmploye(id) {
+             $.get("/Employe/GetEmployePartial", { id: id }, function (res) {
+                 $("#employeModalBody").html(res);
+                 $("#employeModal").modal("show");
+             })
+         }
+
+         function AddEdit() {
+             var modal = $("#employeModal");
+             var form = $('form[name="employeForme"]');
+             form.validate();
+             if (!form.valid()) {
+                 return;
+             }
+             else {
+                 var data = form.serialize();
+                 $.post("/Employe/AddEdit", data, function (res) {
+                     if (res) {
+                         modal.modal('hide');
+                         dataTable.ajax.reload();
+                     }
+                 })
+             }
+         }
+     </script>
+}
