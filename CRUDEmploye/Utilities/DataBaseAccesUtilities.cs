@@ -26,7 +26,7 @@ namespace CRUDEmploye.Utilities
             }
             catch (MySqlException e)
             {
-                throw new Exception("DataBase Connection Error", e);
+                throw new Exception( e.Message,e);
             }
             finally
             {

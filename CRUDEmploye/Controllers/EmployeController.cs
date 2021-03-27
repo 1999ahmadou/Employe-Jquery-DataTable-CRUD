@@ -31,14 +31,22 @@ namespace CRUDEmploye.Controllers
             return PartialView("AddEditEmployePartial", employe);
         }
 
-        public ActionResult AddEdit(Employe employe)
+        public JsonResult AddEdit(Employe employe)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _service.Add(employe);
-                return Json(true);
+                if (ModelState.IsValid)
+                {
+                    _service.Add(employe);
+                    
+                }
+                return Json(new { sucess = true, message = "Bien reçcu" });
             }
-            return Json(false);
+            catch (Exception e)
+            {
+
+                return Json(new { sucess = false, message = e.Message });
+            }
         }
         //[HttpGet]
         //public ActionResult AddEdit(int Id=0)
